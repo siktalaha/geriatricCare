@@ -25,11 +25,11 @@ const PatientSchema=new mongoose.Schema({
         type:String,
         required:[true,"If not given then don't pucho kya hua?"]
     },
-    hospitalName:{
+    hospitalEmail:{
         type:String,
         required:true
     },
-    doctorName:{
+    doctorEmail:{
         type:String,
         // required:true
     },

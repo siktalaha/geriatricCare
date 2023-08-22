@@ -39,7 +39,7 @@ const loginController = async (req, res) => {
                 message: "hospital reference not exists"
             })
         }
-        const validPassword = await bcrypt.compare(req.body.password, user.password)
+        const validPassword = await bcrypt.compare(req.body.password, hospital.password)
         if (!validPassword) {
             return res.status(200).send({
                 success: false,

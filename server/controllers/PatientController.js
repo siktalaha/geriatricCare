@@ -1,10 +1,12 @@
 const patientModel = require("../models/patientModel")
+const drModel=require("../models/DoctorModel")
+const hospModel=require("../models/HospitalModel")
 const bcrypt = require('bcryptjs')
 const nodemailer=require('nodemailer')
 //As axios post request made , here the inputs from form is pushed onto database
 const registerController = async (req, res) => {
     try {
-        const { email, password } = req.body
+        const { email, password,hospitalEmail, doctorEmail } = req.body
         const user = await patientModel.findOne({ email });
         if (user) {
             return res.status(200).send({
@@ -12,6 +14,23 @@ const registerController = async (req, res) => {
                 message: "User Exists"
             })
         }
+        const hosp=await hospModel.findOne({email:hospitalEmail})
+        if(!hosp)
+        {
+            return res.status(200).send({
+                success:false,
+                message:"Hospital doesnot exist"
+            })
+        }
+        const drExist=await drModel.findOne({email:doctorEmail})
+        if(!drExist)
+        {
+            return res.status(200).send({
+                success:false,
+                message:"Dr doesnot exist"
+            })
+        }
+
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         req.body.password = hashedPassword

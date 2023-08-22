@@ -30,8 +30,8 @@ const LoginPatient = () => {
                     guardianName : resp.data.data.guardianName,
                 
                     guardianPhone: resp.data.data.guardianPhone,
-                    hospitalName:resp.data.data.hospitalName,
-                    doctorName:resp.data.data.doctorName
+                    hospitalEmail:resp.data.data.hospitalEmail,
+                    doctorEmail:resp.data.data.doctorEmail
                   }
                   
                   window.localStorage.setItem("patientDetails", JSON.stringify(myObject));

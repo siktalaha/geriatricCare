@@ -1,11 +1,10 @@
 const express = require('express');
-const { loginController, registerController } = require('../controllers/DoctorController');
+const { loginController, registerController,getPatDetails } = require('../controllers/DoctorController');
 
 const DoctorRouter = express.Router();
 
 DoctorRouter.post('/login', loginController);
 DoctorRouter.post('/register', registerController);
-DoctorRouter.get('/abc',(req,res)=>{
-    res.send("Hello from dr router")
-})
+DoctorRouter.post('/get_pat_details',getPatDetails)
+
 module.exports = DoctorRouter;

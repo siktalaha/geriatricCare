@@ -6,7 +6,5 @@ const patientRouter = express.Router();
 patientRouter.post('/login', loginController);
 patientRouter.post('/register', registerController);
 patientRouter.post('/sendEmail',sendEmail)
-patientRouter.get('/abc',(req,res)=>{
-    res.send("hello from pat")
-})
+
 module.exports = patientRouter;

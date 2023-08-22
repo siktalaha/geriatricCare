@@ -1,4 +1,5 @@
 const DoctorModel = require("../models/DoctorModel")
+const PatientModel=require("../models/patientModel")
 const bcrypt = require('bcryptjs')
 
 const registerController = async (req, res) => {
@@ -32,7 +33,7 @@ const registerController = async (req, res) => {
 }
 const loginController = async (req, res) => {
     try {
-
+        //  console.log(req.body);
         const dr = await DoctorModel.findOne({ email: req.body.email })
         if (!dr) {
             return res.status(200).send({
@@ -40,7 +41,7 @@ const loginController = async (req, res) => {
                 message: "DR reference not exists"
             })
         }
-        const validPassword = await bcrypt.compare(req.body.password, user.password)
+        const validPassword = await bcrypt.compare(req.body.password, dr.password)
         if (!validPassword) {
             return res.status(200).send({
                 success: false,
@@ -60,13 +61,36 @@ const loginController = async (req, res) => {
 
     }
     catch (error) {
+        // console.log(error)
         return res.status(400).send({
             success: false,
             message: error
         })
     }
 }
+
+
+const getPatDetails=async(req,res)=>{
+    try{
+     const email=req.body.email
+     const patients=await PatientModel.find({doctorEmail:email})
+    //  console.log(patients)
+      return res.status(200).send({
+        success: true,
+        data:patients
+    })
+    }catch(error)
+    {
+        res.status(400).send({
+            success: false,
+            message: error
+        })
+    }
+}
+
+
 module.exports={
     loginController,
-    registerController
+    registerController,
+    getPatDetails
 }

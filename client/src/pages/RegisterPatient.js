@@ -34,7 +34,7 @@ const RegisterPatient = () => {
             }
             else {
                 // message.error(resp.data.message)
-                alert("error")
+                alert(resp.data.message)
             }
         }
         catch (error) {
@@ -67,11 +67,11 @@ const RegisterPatient = () => {
                 <Form.Item label="Guardian Phone" name="guardianPhone">
                     <Input type="text" />
                 </Form.Item>
-                <Form.Item label="Hospital Name" name="hospitalName">
-                    <Input type="text" />
+                <Form.Item label="Hospital Email" name="hospitalEmail">
+                    <Input type="email" />
                 </Form.Item>
-                <Form.Item label="Doctor Name" name="doctorName">
-                    <Input type="text" />
+                <Form.Item label="Doctor Email" name="doctorEmail">
+                    <Input type="email"  />
                 </Form.Item>
                 <button className="btn btn-primary">
                     Submit
