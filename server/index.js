@@ -3,7 +3,7 @@ const dotenv=require("dotenv")
 const cors= require("cors")
 const connectDB = require("./config/dbconfig")
 const PatientRoute = require("./routes/PatientRoute")
-const DoctorRoute=require("./routes/DoctorRoute")
+const DoctorRouter=require("./routes/DoctorRoute")
 const HospitalRoute=require("./routes/HospitalRoute")
 
 dotenv.config()
@@ -13,8 +13,8 @@ app.use(express.json())
 app.use(cors())
 
 app.use("/api/v1/patient",PatientRoute)
-app.use("api/v1/dr",DoctorRoute)
-app.use("api/v1/hosp",HospitalRoute)
+app.use("/api/v1/dr",DoctorRouter)
+app.use("/api/v1/hosp",HospitalRoute)
 
 
 app.get("/",(req,res)=>{

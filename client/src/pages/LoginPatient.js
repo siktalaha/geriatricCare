@@ -1,28 +1,19 @@
 import axios from 'axios';
 import React from 'react'
+import {Form,Input} from 'antd'
 import { useNavigate } from 'react-router-dom';
 const LoginPatient = () => {
     const navigate=useNavigate()
-    const [inputs, setInputs] = React.useState({});
-    const handleChange = (event) => {
-        //assumption doc name considered unique 
-        //at each change json object formed -- original inputs
-        const name = event.target.name;
-        const value = event.target.value;
-        setInputs(values => ({
-            ...values,
-            [name]: value
-        }))
-    }
+ 
 
     //    console.log(inputs)
 
-    const handleSubmit =async (event) => {
+    const submitHandler =async (inputs) => {
         
         // console.log(inputs)
         try{
             //to prevent auto refresh
-            event.preventDefault()
+            // event.preventDefault()
             const resp=await axios.post('http://localhost:8000/api/v1/patient/login',inputs)
             if(resp.data.success)
             {
@@ -60,28 +51,18 @@ const LoginPatient = () => {
     }
   return (
     <>
-      <h2>Login Patient</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    Enter Your Email:
-                    <input className="form-control"
-                        type="email"
-                        name="email"
-                        value={inputs.email || ""}
-                        onChange={handleChange}
-                    />
-                </div>
-                <div className="form-group">
-                    Enter Your Password:
-                    <input className="form-control"
-                        type="password"
-                        name="password"
-                        value={inputs.password || ""}
-                        onChange={handleChange}
-                    />
-                </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
-        </form>
+       <Form layout='vertical' onFinish={submitHandler}>
+        <h1>Patient 's Guardian  please login!!</h1>
+        <Form.Item label="Email" name="email">
+          <Input type="email"/>
+        </Form.Item>
+        <Form.Item label="Password" name="password">
+          <Input type="password"/>
+        </Form.Item>
+        <button className="btn btn-primary">
+          Login 
+        </button>
+      </Form>
     </>
   )
 }

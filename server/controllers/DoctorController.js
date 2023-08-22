@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs')
 const registerController = async (req, res) => {
     try {
         const { email, password } = req.body
+        console.log(req.body)
         const dr = await DoctorModel.findOne({ email });
         if (dr) {
             return res.status(200).send({

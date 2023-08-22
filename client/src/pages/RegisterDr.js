@@ -1,8 +1,57 @@
 import React from 'react'
+import { Form, Input } from 'antd'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 const RegisterDr = () => {
+  const navigate = useNavigate()
+  const submitHandler = async (inputs) => {
+    // console.log(inputs)
+    try {
+      console.log(inputs);
+      const resp = await axios.post('http://localhost:8000/api/v1/dr/register', inputs)
+      if (resp.data.success) {
+        alert("Registered successfully")
+        //message.success("Registered successfully")
+        navigate("/")
+      }
+      else {
+        // message.error(resp.data.message)
+        alert("error kahan aya")
+      }
+    }
+    catch (error) {
+      // message.error(error)
+      alert(error)
+    }
+
+  }
+
   return (
-    <div>RegisterDr</div>
+    <>
+      <div>
+        <Form layout='vertical' onFinish={submitHandler}>
+          <h1>Patient please register!!</h1>
+          <Form.Item label="Doctor Name" name="drName">
+            <Input type="text" />
+          </Form.Item>
+          <Form.Item label="Email" name="email">
+            <Input type="email" />
+          </Form.Item>
+          <Form.Item label="Password" name="password">
+            <Input type="password" />
+          </Form.Item>
+
+          <Form.Item label="Doctor Phone" name="drPhone">
+            <Input type="text" />
+          </Form.Item>
+
+          <button className="btn btn-primary">
+            Submit
+          </button>
+        </Form>
+      </div>
+    </>
   )
 }
 
