@@ -4,13 +4,7 @@ import {Form,Input} from 'antd'
 import { useNavigate } from 'react-router-dom';
 const LoginPatient = () => {
     const navigate=useNavigate()
- 
-
-    //    console.log(inputs)
-
     const submitHandler =async (inputs) => {
-        
-        // console.log(inputs)
         try{
             //to prevent auto refresh
             // event.preventDefault()
@@ -50,9 +44,10 @@ const LoginPatient = () => {
 
     }
   return (
-    <>
+    <div className='outer-box'>
+      <div className='form-box'>
        <Form layout='vertical' onFinish={submitHandler}>
-        <h1>Patient 's Guardian  please login!!</h1>
+        <h4>Login Guardian!!</h4>
         <Form.Item label="Email" name="email">
           <Input type="email"/>
         </Form.Item>
@@ -63,7 +58,8 @@ const LoginPatient = () => {
           Login 
         </button>
       </Form>
-    </>
+      </div>
+    </div>
   )
 }
 

@@ -3,7 +3,6 @@ import axios from 'axios'
 import {Form,Input} from 'antd'
 import { useNavigate } from 'react-router-dom'
 
-
 const LoginHosp = () => {
   const navigate=useNavigate()
   const submitHandler=async(val)=>{
@@ -12,8 +11,16 @@ const LoginHosp = () => {
         if(resp.data.success)
         {
           alert("Hospital apka login hogaya")
+          console.log(resp.data)
+          const myObject = {
+            _id:resp.data.data._id,
+            email:resp.data.data.email,
+            hospitalName:resp.data.data.HospName,
+            hospitalPhone: resp.data.data.HospPhone,
+            hospitalAddress: resp.data.data.HospAddress
+          }
+          window.localStorage.setItem('hospitalDetails', JSON.stringify(myObject));
           navigate("/hosp_details")
-
         }
         else
         alert("Error hogaya apka")
@@ -24,10 +31,10 @@ const LoginHosp = () => {
     }
   }
   return (
-    <>
-    <div>
+    <div className='outer-box'>
+    <div className='form-box'>
     <Form layout='vertical' onFinish={submitHandler}>
-        <h1>Doctor please login!!</h1>
+        <h1>Login Hospital</h1>
         <Form.Item label="Email" name="email">
           <Input type="email"/>
         </Form.Item>
@@ -39,7 +46,7 @@ const LoginHosp = () => {
         </button>
       </Form>
     </div>
-    </>
+    </div>
   )
 }
 

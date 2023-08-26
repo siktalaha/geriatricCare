@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, message } from 'antd'
-
+ 
 
 const RegisterPatient = () => {
     const navigate = useNavigate()
@@ -45,10 +45,10 @@ const RegisterPatient = () => {
     }
 
     return (
-        <>
-        <div>
+        <div className='outer-box'>
+        <div className='form-box'>
             <Form layout='vertical' onFinish={submitHandler}>
-                <h1>Patient please register!!</h1>
+                <h1> Register Patient </h1>
                 <Form.Item label="Patient Name" name="pName">
                     <Input type="text" />
                 </Form.Item>
@@ -79,7 +79,7 @@ const RegisterPatient = () => {
             </Form>
             </div>
 
-        </>
+        </div>
     )
 }
 

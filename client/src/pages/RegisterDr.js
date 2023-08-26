@@ -28,10 +28,10 @@ const RegisterDr = () => {
   }
 
   return (
-    <>
-      <div>
+    <div className='outer-box'>
+      <div className='form-box'>
         <Form layout='vertical' onFinish={submitHandler}>
-          <h1>Patient please register!!</h1>
+          <h4> Register Doctor </h4>
           <Form.Item label="Doctor Name" name="drName">
             <Input type="text" />
           </Form.Item>
@@ -51,7 +51,7 @@ const RegisterDr = () => {
           </button>
         </Form>
       </div>
-    </>
+    </div>
   )
 }
 

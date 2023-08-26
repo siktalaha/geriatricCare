@@ -19,10 +19,10 @@ const RegisterHosp = () => {
     }
   }
   return (
-    <>
-      <div>
+    <div className='outer-box'>
+      <div className='form-box'>
         <Form layout='vertical' onFinish={submitHandler}>
-          <h1>Hospital please register!!</h1>
+          <h4> Register Hospital </h4>
           <Form.Item label="Hospital Name" name="HospName">
             <Input type="text" />
           </Form.Item>
@@ -44,7 +44,7 @@ const RegisterHosp = () => {
           </button>
         </Form>
       </div>
-    </>
+    </div>
   )
 }
 

@@ -15,30 +15,22 @@ const LoginDr = () => {
           _id:resp.data.data._id,
           email:resp.data.data.email,
           drName:resp.data.data.drName,
-        drPhone: resp.data.data.drPhone,
+          drPhone: resp.data.data.drPhone
         }
-        
         window.localStorage.setItem("doctorDetails", JSON.stringify(myObject));
-
-
-
         navigate('/dr_details')
-
       }
       else
       alert(resp.data.message)
-
-      
-      
      } catch (error) {
        alert(error)
      }
   }
   return (
-    <>
-     <div>
+    <div className='outer-box'>
+     <div className='form-box'>
       <Form layout='vertical' onFinish={submitHandler}>
-        <h1>Doctor please login!!</h1>
+        <h1>Login Dr</h1>
         <Form.Item label="Email" name="email">
           <Input type="email"/>
         </Form.Item>
@@ -50,7 +42,7 @@ const LoginDr = () => {
         </button>
       </Form>
      </div>
-    </>
+    </div>
   )
 }
 

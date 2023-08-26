@@ -3,3 +3,62 @@
   margin:0;
   box-sizing:border-box;
 }
+body {  
+  margin: 0;
+  font-family: "montserrat";
+  background: linear-gradient(
+    to left,
+    #23a6d5,
+    #4a148c,
+    #a200ff,
+    #4a148c,
+    #23a6d5
+  );
+  background-size: 400% 400%;
+  animation: gradientTranisition 50s linear infinite;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  
+  h1 {
+    font-size: 1rem;
+    letter-spacing: normal;
+    color: #ffffff;
+  }
+}
+
+@keyframes gradientTranisition {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.outer-box{
+  height: 100%;
+  border: 2px solid red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-box{
+  flex-direction: column;
+}
+
+.form-box{
+  /* height: 60vh; */
+  /* width: 50vh; */
+  padding: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid blue;
+}
