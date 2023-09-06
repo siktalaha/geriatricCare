@@ -1,4 +1,5 @@
 const HospitalModel = require("../models/HospitalModel")
+const PatientModel=require("../models/patientModel")
 const bcrypt = require('bcryptjs')
 
 const registerController = async (req, res) => {
@@ -65,7 +66,26 @@ const loginController = async (req, res) => {
         })
     }
 }
+const getPatDetails=async(req,res)=>{
+    try{
+     const email=req.body.email
+    //  console.log(email);
+     const patients=await PatientModel.find({ hospitalEmail:email})
+    //  console.log(patients)
+      return res.status(200).send({
+        success: true,
+        data:patients
+    })
+    }catch(error)
+    {
+        res.status(400).send({
+            success: false,
+            message: error
+        })
+    }
+}
 module.exports={
     loginController,
-    registerController
+    registerController,
+    getPatDetails
 }

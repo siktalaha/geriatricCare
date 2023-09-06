@@ -113,8 +113,28 @@ const sendEmail=async(req,res)=>{
         }
       });
 }
+const getPatDetails =async (req,res)=>{
+    try{
+        // await necessary to give buffer time to load the data from the db else axioserror for no data avaliable will arise
+        const id=req.body.id;
+        // console.log(id);
+        const patient= await patientModel.findById(id);
+        res.status(200).send({
+            success:true,
+            data:patient
+        })
+    }
+    catch(error)
+    {
+       res.status(404).send({
+        success:false,
+        error
+       })
+    }
+}
 module.exports={
     loginController,
     registerController,
-    sendEmail
+    sendEmail,
+    getPatDetails
 }

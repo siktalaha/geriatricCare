@@ -17,20 +17,20 @@ const LoginPatient = () => {
                 console.log(resp.data.data)
                 // localStorage.setItem('patientdetails', JSON.stringify(resp.data.data));
                 // navigate("/pat_details")
-                const myObject = {
-                    _id:resp.data.data._id,
-                    email:resp.data.data.email,
-                    pName:resp.data.data.pName,
-                    guardianName : resp.data.data.guardianName,
+                // const myObject = {
+                //     _id:resp.data.data._id,
+                //     email:resp.data.data.email,
+                //     pName:resp.data.data.pName,
+                //     guardianName : resp.data.data.guardianName,
                 
-                    guardianPhone: resp.data.data.guardianPhone,
-                    hospitalEmail:resp.data.data.hospitalEmail,
-                    doctorEmail:resp.data.data.doctorEmail
-                  }
-                  
-                  window.localStorage.setItem("patientDetails", JSON.stringify(myObject));
-                  navigate("/pat_details")
-                
+                //     guardianPhone: resp.data.data.guardianPhone,
+                //     hospitalEmail:resp.data.data.hospitalEmail,
+                //     doctorEmail:resp.data.data.doctorEmail
+                //   }
+                  // initally using local storage we send the patientdetails in total now only resp.data.data._id
+                //   window.localStorage.setItem("patientDetails", JSON.stringify(myObject));
+                // {state:{redirectFrom:"guardian",id:resp.data.data._id}} , uselocation can be used to do so get the patientid 
+                  navigate("/pat_details",{state:{redirectFrom:"guardian",id:resp.data.data._id}})
             }
             else
             {

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Table } from 'antd'
+import { useNavigate } from 'react-router-dom'
+
 const DoctorDetails =  () => {
+  const navigate=useNavigate()
   const doctor = JSON.parse(window.localStorage.getItem('doctorDetails'))
-  const [pat, setPat] = useState()
+  const [pat, setPat] = useState(null)
   // console.log(doctor)
   const getPatientDetails = async () => {
     try {
@@ -18,7 +21,7 @@ const DoctorDetails =  () => {
   }
 
   useEffect(() => {
-    console.log("Hi")
+    // console.log("Hi")
     getPatientDetails()
 
   }, [])
@@ -39,6 +42,13 @@ const DoctorDetails =  () => {
   {
    title:"Guardian Email",
    dataIndex:"email"
+  },
+  {
+    title:"Refer to",
+    render:(text,record)=>
+    <div onClick={()=> navigate("/pat_details",{state:{redirectFrom:"doctor",id:record._id}})}>
+      Click here
+    </div>
   }
  ]
   //console.log(pat)
