@@ -5,6 +5,7 @@ const PatientLogSchema=new mongoose.Schema({
         required:[true, 'Email is required'],
         unique:true
     },
+    
     message:{
         type:String,
         required:true

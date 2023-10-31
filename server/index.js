@@ -5,6 +5,7 @@ const connectDB = require("./config/dbconfig")
 const PatientRoute = require("./routes/PatientRoute")
 const DoctorRouter=require("./routes/DoctorRoute")
 const HospitalRoute=require("./routes/HospitalRoute")
+const LogRoute=require("./routes/LogRoute")
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ app.use(cors())
 app.use("/api/v1/patient",PatientRoute)
 app.use("/api/v1/dr",DoctorRouter)
 app.use("/api/v1/hosp",HospitalRoute)
+app.use("/api/v1/log",LogRoute)
 
 
 app.get("/",(req,res)=>{
