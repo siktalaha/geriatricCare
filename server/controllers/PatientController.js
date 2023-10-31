@@ -106,11 +106,11 @@ const sendEmail=async(req,res)=>{
       
       transporter.sendMail(mailOptions, function(error, info){
         if (error) {
-            console.log(error);
+            // console.log(error);
           res.status(400).send({success:false})
           
         } else {
-            console.log('Email sent: ' + info.response);
+            // console.log('Email sent: ' + info.response);
             res.status(200).send({success:true})
         }
       });

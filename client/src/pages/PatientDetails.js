@@ -81,19 +81,39 @@ const PatientDetails = () => {
         }
      }
   }
+
+  const downloadReport = () => {
+    var json = JSON.stringify(logs);
+    json = [json];
+    var blob1 = new Blob(json, { type: "text/plain;charset=utf-8" });
+    var isIE = false || !!document.documentMode;
+    if (isIE) {
+        window.navigator.msSaveBlob(blob1, "report.txt");
+    } else {
+        var url = window.URL || window.webkitURL;
+        const link = url.createObjectURL(blob1);
+        var a = document.createElement("a");
+        a.download = "report.txt";
+        a.href = link;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    }
+  }
+
   return (
     <>
       {/* <h1>Hi guardian ={data.guardianName} patient={data.pName} is under doctor name={data.doctorEmail}</h1>
     <button onClick={sendEmail} className="btn btn-primary">Send Email</button> */}
       <div className="p-5">
         {/* <h2>Welcome {data && data.guardianName}</h2> */}
-        hello {redirectFrom}
+        Hello {redirectFrom}
         <div className="w-50 mx-auto">
           <p>Log messages of {data && data.pName}</p>
           <Table columns={columns} dataSource={logs} />
         </div>
         <div>
-          <Button type="primary">Download Report</Button>
+          <Button type="primary" onClick={downloadReport}>Download Report</Button>
          { redirectFrom==="doctor" && <Button type="danger">Emergency Alert </Button>}
           <Button type="success">Schedule tests</Button>
         </div>
