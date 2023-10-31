@@ -30,7 +30,7 @@ const LoginPatient = () => {
                   // initally using local storage we send the patientdetails in total now only resp.data.data._id
                 //   window.localStorage.setItem("patientDetails", JSON.stringify(myObject));
                 // {state:{redirectFrom:"guardian",id:resp.data.data._id}} , uselocation can be used to do so get the patientid 
-                  navigate("/pat_details",{state:{redirectFrom:"guardian",id:resp.data.data._id}})
+                navigate("/pat_details",{state:{redirectFrom:"guardian",id:resp.data.data._id}})
             }
             else
             {
@@ -39,7 +39,7 @@ const LoginPatient = () => {
         }
         catch(error)
         {
-              alert(error)
+            alert(error)
         }
 
     }

@@ -10,7 +10,7 @@ const LoginHosp = () => {
         const resp=await axios.post("http://localhost:8000/api/v1/hosp/login",val)
         if(resp.data.success)
         {
-          alert("Hospital apka login hogaya")
+          alert(resp.data.message)
           console.log(resp.data)
           const myObject = {
             _id:resp.data.data._id,
@@ -23,7 +23,7 @@ const LoginHosp = () => {
           navigate("/hosp_details")
         }
         else
-        alert("Error hogaya apka")
+        alert(resp.data.message)
     } 
     catch(error)
     {
