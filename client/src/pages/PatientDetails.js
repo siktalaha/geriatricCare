@@ -1,5 +1,5 @@
 import {React,useEffect, useState} from 'react'
-import {Button} from 'antd'
+import {Button,Table} from 'antd'
 import axios from 'axios'
 import { useLocation } from 'react-router-dom'
 const PatientDetails = () => {
@@ -15,9 +15,12 @@ const PatientDetails = () => {
     
   console.log(id,redirectFrom)
   const [data,setData]=useState(null)
+  const [log,setLog]=useState(null)
   const getPatDetails = async()=>{
     const resp= await axios.post('http://localhost:8000/api/v1/patient/patdetails',{id})
     setData(resp.data.data)
+    // console.log(resp.data.logs)
+    setLog(resp.data.logs)
   }
   const sendEmail=async()=>{
        const resp=await axios.post('http://localhost:8000/api/v1/patient/sendEmail',data)
@@ -26,6 +29,14 @@ const PatientDetails = () => {
   useEffect(() => {
       getPatDetails();
   }, [])
+
+  const columns=[
+    {
+      title:"Message",
+      dataIndex:"message"
+    }
+    
+   ]
   // console.log(data)
   return ( 
     <>
@@ -36,11 +47,13 @@ const PatientDetails = () => {
        hello {redirectFrom}
       <div>
         <p>Log messages of {data && data.pName}</p>
+        <Table columns={columns} dataSource={log}/>
       </div> 
+
       <div>
-        <Button type="primary">Download Report</Button>
-        <Button type="danger">Emergency Alert </Button>
-        <Button type="success">Schedule tests</Button>
+      <Button type="primary">Download Report</Button>
+      <Button type="danger">Emergency Alert </Button>
+      <Button type="success">Schedule tests</Button>
       </div>
     </div>
 

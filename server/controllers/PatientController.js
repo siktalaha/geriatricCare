@@ -3,6 +3,7 @@ const drModel=require("../models/DoctorModel")
 const hospModel=require("../models/HospitalModel")
 const bcrypt = require('bcryptjs')
 const nodemailer=require('nodemailer')
+const LogModel=require("../models/LogModel")
 //As axios post request made , here the inputs from form is pushed onto database
 const registerController = async (req, res) => {
     try {
@@ -119,9 +120,11 @@ const getPatDetails =async (req,res)=>{
         const id=req.body.id;
         // console.log(id);
         const patient= await patientModel.findById(id);
+        const logsData=await LogModel.find({patientEmail:patient.email})
         res.status(200).send({
             success:true,
-            data:patient
+            data:patient,
+            logs:logsData,
         })
     }
     catch(error)
