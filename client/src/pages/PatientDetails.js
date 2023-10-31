@@ -12,9 +12,9 @@ const PatientDetails = () => {
   const id = location.state.id;
   const redirectFrom = location.state.redirectFrom;
 
-  console.log(id, redirectFrom);
+  // console.log(id, redirectFrom);
   const [data, setData] = useState(null);
-  const [log, setLog] = useState(null);
+  const [logs, setLogs] = useState(null);
   const getPatDetails = async () => {
     const resp = await axios.post(
       "http://localhost:8000/api/v1/patient/patdetails",
@@ -22,17 +22,29 @@ const PatientDetails = () => {
     );
     setData(resp.data.data);
     // console.log(resp.data.logs)
-    setLog(resp.data.logs);
+    setLogs(resp.data.logs);
   };
-  const sendEmail = async () => {
+  const sendEmail = async (subject,text) => {
     const resp = await axios.post(
       "http://localhost:8000/api/v1/patient/sendEmail",
-      data
+      {
+        "email":data.email,
+        "subject":subject,
+        "text":text
+      }
     );
+
     alert("Message sent");
   };
   useEffect(() => {
-    getPatDetails();
+    // const func= async()=>{
+    //   await getPatDetails();
+    //   console.log(logs)
+    // }
+    // // console.log(logs)
+    // func()
+    getPatDetails()
+     
   }, []);
 
   const columns = [
@@ -55,6 +67,20 @@ const PatientDetails = () => {
     }
   ];
   // console.log(data)
+  // console.log(logs)
+  if(logs)
+  {
+    // console.log(logs)
+    for(let i=0;i<logs.length;i++)
+     {
+      if(logs[i].value>=102 && logs[i].type==0)
+        {
+          let text="Temperature is recorded higher than usual reading. Immediate medication is required.Kindly arrange for tests if required "
+          let subject="Body Temperature high Alert- geriatic care"
+          sendEmail(subject,text)
+        }
+     }
+  }
   return (
     <>
       {/* <h1>Hi guardian ={data.guardianName} patient={data.pName} is under doctor name={data.doctorEmail}</h1>
@@ -64,11 +90,11 @@ const PatientDetails = () => {
         hello {redirectFrom}
         <div className="w-50 mx-auto">
           <p>Log messages of {data && data.pName}</p>
-          <Table columns={columns} dataSource={log} />
+          <Table columns={columns} dataSource={logs} />
         </div>
         <div>
           <Button type="primary">Download Report</Button>
-          <Button type="danger">Emergency Alert </Button>
+         { redirectFrom==="doctor" && <Button type="danger">Emergency Alert </Button>}
           <Button type="success">Schedule tests</Button>
         </div>
       </div>

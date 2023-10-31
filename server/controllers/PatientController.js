@@ -87,6 +87,7 @@ const loginController = async (req, res) => {
     }
 }
 const sendEmail=async(req,res)=>{
+    // console.log(req.body)
     const {email}=req.body
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -99,8 +100,8 @@ const sendEmail=async(req,res)=>{
       const mailOptions = {
         from: 'geriatriccare92@gmail.com',
         to: email,
-        subject: 'Sending Email From Geriatic Care',
-        text: JSON.stringify(req.body)
+        subject: req.body.subject,
+        text: req.body.text
       };
       
       transporter.sendMail(mailOptions, function(error, info){
