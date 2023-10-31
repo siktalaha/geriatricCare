@@ -36,12 +36,11 @@ const PatientDetails = () => {
        hello {redirectFrom}
       <div>
         <p>Log messages of {data && data.pName}</p>
-
       </div> 
       <div>
-      <Button type="primary">Download Report</Button>
-      <Button type="danger">Emergency Alert </Button>
-      <Button type="success">Schedule tests</Button>
+        <Button type="primary">Download Report</Button>
+        <Button type="danger">Emergency Alert </Button>
+        <Button type="success">Schedule tests</Button>
       </div>
     </div>
 
