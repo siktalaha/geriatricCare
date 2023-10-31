@@ -18,12 +18,9 @@ app.use("/api/v1/dr",DoctorRouter)
 app.use("/api/v1/hosp",HospitalRoute)
 app.use("/api/v1/log",LogRoute)
 
-
 app.get("/",(req,res)=>{
-    res.send("HEllo")
+    res.send("Backend Is Live")
 })
-
-
 
 const startServer = async () => {
     try {

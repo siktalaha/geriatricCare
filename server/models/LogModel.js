@@ -1,9 +1,8 @@
 const mongoose=require("mongoose")
 const PatientLogSchema=new mongoose.Schema({
-    patientId:{
+    patientEmail:{
         type:String,
-        required:[true, 'Email is required'],
-        unique:true
+        required:[true, 'Email is required']
     },
     
     message:{
