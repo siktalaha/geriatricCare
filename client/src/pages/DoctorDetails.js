@@ -57,7 +57,9 @@ const DoctorDetails =  () => {
     <div>
       Hi {doctor.drName}
     </div>
-    <div>
+    <br/>
+    <div className='w-75 mx-auto'>
+      <div>Patient List</div>
       <Table columns={columns} dataSource={pat}/>
     </div>
     </>

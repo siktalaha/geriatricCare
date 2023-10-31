@@ -42,7 +42,16 @@ const PatientDetails = () => {
     },
     {
       title : "Value",
-      dataIndex: "value"
+      // dataIndex: "value"
+      render:(text,record)=>
+      (record.value >= 102 ? 
+        <p className="fw-bold text-danger">
+          {record.value}
+        </p>:
+        <p>
+          {record.value}
+        </p>
+      )
     }
   ];
   // console.log(data)
@@ -50,10 +59,10 @@ const PatientDetails = () => {
     <>
       {/* <h1>Hi guardian ={data.guardianName} patient={data.pName} is under doctor name={data.doctorEmail}</h1>
     <button onClick={sendEmail} className="btn btn-primary">Send Email</button> */}
-      <div>
+      <div className="p-5">
         {/* <h2>Welcome {data && data.guardianName}</h2> */}
         hello {redirectFrom}
-        <div>
+        <div className="w-50 mx-auto">
           <p>Log messages of {data && data.pName}</p>
           <Table columns={columns} dataSource={log} />
         </div>
