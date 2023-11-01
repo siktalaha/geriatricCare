@@ -27,10 +27,10 @@ const LoginDr = () => {
      }
   }
   return (
-    <div className='outer-box'>
-     <div className='form-box'>
-      <Form layout='vertical' onFinish={submitHandler}>
-        <h1>Login Dr</h1>
+    <div className='outer-box '>
+     <div className='form-box '>
+      <Form layout='vertical' onFinish={submitHandler} >
+        <h1>Login Doctor</h1>
         <Form.Item label="Email" name="email">
           <Input type="email"/>
         </Form.Item>

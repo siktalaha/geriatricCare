@@ -54,7 +54,7 @@ const DoctorDetails =  () => {
   //console.log(pat)
   return (
     <>
-    <div>
+    <div className='welcomeBox'>
       Hi {doctor.drName}
     </div>
     <br/>

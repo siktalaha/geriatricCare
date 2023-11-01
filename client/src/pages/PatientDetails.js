@@ -107,12 +107,15 @@ const PatientDetails = () => {
     <button onClick={sendEmail} className="btn btn-primary">Send Email</button> */}
       <div className="p-5">
         {/* <h2>Welcome {data && data.guardianName}</h2> */}
-        Hello {redirectFrom}
+       <div className="welcomeBox">
+       Hello {redirectFrom}
+       </div>
         <div className="w-50 mx-auto">
-          <p>Log messages of {data && data.pName}</p>
+          <p className="text-success font-bold">Log messages of {data && data.pName}</p>
           <Table columns={columns} dataSource={logs} />
+          
         </div>
-        <div>
+        <div className="w-50 mx-auto">
           <Button type="primary" onClick={downloadReport}>Download Report</Button>
          { redirectFrom==="doctor" && <Button type="danger">Emergency Alert </Button>}
           <Button type="success">Schedule tests</Button>
