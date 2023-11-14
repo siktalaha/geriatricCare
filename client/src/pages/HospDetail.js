@@ -48,13 +48,14 @@ const HospDetail = () => {
     }
    ]
   
-  // console.log(pat);
+  console.log(hospital);
   return (
     <>
-      
-      <div>
-      Hi {hospital.HospName}
+    <div className='welcomeBox'>
+      Hi {hospital.hospitalName}
     </div>
+    <br/>
+    <br/>
     <div>
       <Table columns={columns} dataSource={pat}/>
     </div>
