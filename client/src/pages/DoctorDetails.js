@@ -7,6 +7,7 @@ const DoctorDetails =  () => {
   const navigate=useNavigate()
   const doctor = JSON.parse(window.localStorage.getItem('doctorDetails'))
   const [pat, setPat] = useState(null)
+  const [showModal, setShowModal] = useState(false)
   // console.log(doctor)
   const getPatientDetails = async () => {
     try {
@@ -46,8 +47,8 @@ const DoctorDetails =  () => {
   {
     title:"Refer to",
     render:(text,record)=>
-    <div onClick={()=> navigate("/pat_details",{state:{redirectFrom:"doctor",id:record._id}})}>
-      Click here
+    <div className='pointerDiv' onClick={()=> navigate("/pat_details",{state:{redirectFrom:"doctor",id:record._id}})}>
+      Click Here
     </div>
   }
  ]
