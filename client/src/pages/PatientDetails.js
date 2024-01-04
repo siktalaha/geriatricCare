@@ -69,19 +69,19 @@ const PatientDetails = () => {
   ];
   // console.log(data)
   // console.log(logs)
-  // if(logs)
-  // {
-  //   // console.log(logs)
-  //   for(let i=0;i<logs.length;i++)
-  //    {
-  //     if(logs[i].value>=102 && logs[i].type==0)
-  //       {
-  //         let text="Temperature is recorded higher than usual reading. Immediate medication is required.Kindly arrange for tests if required "
-  //         let subject="Body Temperature high Alert- geriatic care"
-  //         sendEmail(subject,text)
-  //       }
-  //    }
-  // }
+  if(logs)
+  {
+    // console.log(logs)
+    for(let i=0;i<logs.length;i++)
+     {
+      if(logs[i].value>=102 && logs[i].type==0)
+        {
+          let text="Temperature is recorded higher than usual reading. Immediate medication is required.Kindly arrange for tests if required "
+          let subject="Body Temperature high Alert- geriatic care"
+          sendEmail(subject,text)
+        }
+     }
+  }
 
   const downloadReport = () => {
     var json = JSON.stringify(logs);
