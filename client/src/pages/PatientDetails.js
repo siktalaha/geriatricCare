@@ -1,5 +1,6 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Input, Modal, Table } from "antd";
+import { Button, Form, Input, Modal, Table, Popconfirm, message } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 const PatientDetails = () => {
@@ -15,7 +16,10 @@ const PatientDetails = () => {
   // console.log(id, redirectFrom);
   const [data, setData] = useState(null);
   const [logs, setLogs] = useState(null);
+  const [prescriptions, setPrescriptions] = useState(null);
   const [showModal, setShowModal] = useState(false)
+  const [showMedicineModal, setShowMedicineModal] = useState(false)
+  
   const getPatDetails = async () => {
     const resp = await axios.post(
       "http://localhost:8000/api/v1/patient/patdetails",
@@ -24,7 +28,9 @@ const PatientDetails = () => {
     setData(resp.data.data);
     // console.log(resp.data.logs)
     setLogs(resp.data.logs);
+    setPrescriptions(resp.data.prescriptions)
   };
+
   const sendEmail = async (subject,text) => {
     const resp = await axios.post(
       "http://localhost:8000/api/v1/patient/sendEmail",
@@ -67,21 +73,70 @@ const PatientDetails = () => {
       )
     }
   ];
+
+  const handleMedicineRemove = async(record) => {
+    try {
+      const res = await axios.post(
+        "http://localhost:8000/api/v1/prescribe/delete",
+        {
+          prescriptionId: record._id
+        }
+      );
+      if (res.data.success) {
+        message.success(res.data.message);
+        getPatDetails();
+      } else {
+        message.error(res.data.message);
+      }
+    } catch (error) {
+      alert(error)
+    }
+  }
+
+  const prescriotionColumns = [
+    {
+      title: "Cause",
+      dataIndex: "diseaseName"
+    },
+    {
+      title: "Medicine",
+      dataIndex: "medicine"
+    },
+    {
+      title: "Duration",
+      dataIndex : "weeks"
+    },
+    {
+      title: "Stop",
+      render : (text, record) =>
+        <div className="button-container">
+          <Popconfirm
+            title="Remove the medicine"
+            description="Are you sure to remove this medicine?"
+            onConfirm={() => handleMedicineRemove(record)}
+            okText="Yes"
+            cancelText="No"
+          >
+            <DeleteOutlined />
+          </Popconfirm>
+        </div>
+    }
+  ];
   // console.log(data)
   // console.log(logs)
-  if(logs)
-  {
-    // console.log(logs)
-    for(let i=0;i<logs.length;i++)
-     {
-      if(logs[i].value>=102 && logs[i].type==0)
-        {
-          let text="Temperature is recorded higher than usual reading. Immediate medication is required.Kindly arrange for tests if required "
-          let subject="Body Temperature high Alert- geriatic care"
-          sendEmail(subject,text)
-        }
-     }
-  }
+  // if(logs)
+  // {
+  //   // console.log(logs)
+  //   for(let i=0;i<logs.length;i++)
+  //    {
+  //     if(logs[i].value>=102 && logs[i].type==0)
+  //       {
+  //         let text="Temperature is recorded higher than usual reading. Immediate medication is required.Kindly arrange for tests if required "
+  //         let subject="Body Temperature high Alert- geriatic care"
+  //         sendEmail(subject,text)
+  //       }
+  //    }
+  // }
 
   const downloadReport = () => {
     var json = JSON.stringify(logs);
@@ -101,6 +156,9 @@ const PatientDetails = () => {
         document.body.removeChild(a);
     }
   }
+
+  const [form] = Form.useForm();
+
   // console.log(data)
   const submitPrescriptionHandler = async(val) => {
     console.log(val)
@@ -114,7 +172,8 @@ const PatientDetails = () => {
     if(resp.data.success)
     {
       alert(resp.data.message)
-      
+      form.resetFields();
+      getPatDetails();
     }
     else
     alert(resp.data.message)
@@ -139,7 +198,11 @@ const PatientDetails = () => {
             }} 
             footer = {false}
           >
-            <Form layout="vertical" onFinish={submitPrescriptionHandler}>
+            <Form 
+              layout="vertical" 
+              onFinish={submitPrescriptionHandler}
+              form={form}
+            >
             <Form.Item label="Enter disease" name="diseaseName">
               <Input type="text"/>
             </Form.Item>
@@ -165,6 +228,20 @@ const PatientDetails = () => {
           <Button type="danger" onClick={() => setShowModal(true)}> Prescribe Medicine </Button>
         }
           <Button type="success">Schedule tests</Button>
+          <Button type="success" onClick={() => setShowMedicineModal(true)}>View Medicine</Button>
+          <div className="w-50 mx-auto">
+            <Modal
+              forceRender
+              title = "Ongoing Medicine"
+              open = {showMedicineModal}
+              onCancel={() => {
+                setShowMedicineModal(false)
+              }} 
+              footer = {false}
+            >
+              <Table columns={prescriotionColumns} dataSource={prescriptions} />
+            </Modal>
+          </div>
         </div>
       </div>
     </>
