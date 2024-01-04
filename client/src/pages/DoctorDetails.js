@@ -7,7 +7,7 @@ const DoctorDetails =  () => {
   const navigate=useNavigate()
   const doctor = JSON.parse(window.localStorage.getItem('doctorDetails'))
   const [pat, setPat] = useState(null)
-  const [showModal, setShowModal] = useState(false)
+  
   // console.log(doctor)
   const getPatientDetails = async () => {
     try {
