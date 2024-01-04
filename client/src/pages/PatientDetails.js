@@ -101,9 +101,23 @@ const PatientDetails = () => {
         document.body.removeChild(a);
     }
   }
-
+  // console.log(data)
   const submitPrescriptionHandler = async(val) => {
     console.log(val)
+    const resp=await axios.post(
+      "http://localhost:8000/api/v1/prescribe/add",
+      {
+        ...val,
+        patientEmail:data.email
+      }
+    )
+    if(resp.data.success)
+    {
+      alert(resp.data.message)
+      
+    }
+    else
+    alert(resp.data.message)
   }
 
   return (
@@ -126,7 +140,13 @@ const PatientDetails = () => {
             footer = {false}
           >
             <Form layout="vertical" onFinish={submitPrescriptionHandler}>
-            <Form.Item label="Medicine" name="medicine">
+            <Form.Item label="Enter disease" name="diseaseName">
+              <Input type="text"/>
+            </Form.Item>
+            <Form.Item label="Enter medicine" name="medicine">
+              <Input type="text"/>
+            </Form.Item>
+            <Form.Item label="Enter duration in weeks" name="weeks">
               <Input type="text"/>
             </Form.Item>
             <button className="btn btn-primary">

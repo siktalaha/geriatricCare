@@ -6,6 +6,7 @@ const PatientRoute = require("./routes/PatientRoute")
 const DoctorRouter=require("./routes/DoctorRoute")
 const HospitalRoute=require("./routes/HospitalRoute")
 const LogRoute=require("./routes/LogRoute")
+const PrescripRouter=require("./routes/PrescriptionRoute")
 
 dotenv.config()
 
@@ -17,6 +18,7 @@ app.use("/api/v1/patient",PatientRoute)
 app.use("/api/v1/dr",DoctorRouter)
 app.use("/api/v1/hosp",HospitalRoute)
 app.use("/api/v1/log",LogRoute)
+app.use("/api/v1/prescribe",PrescripRouter)
 
 app.get("/",(req,res)=>{
     res.send("Backend Is Live")

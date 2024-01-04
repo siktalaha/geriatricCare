@@ -47,7 +47,7 @@ const LoginPatient = () => {
     <div className='outer-box'>
       <div className='form-box'>
        <Form layout='vertical' onFinish={submitHandler}>
-        <h4>Login Guardian!!</h4>
+        <h4>Login Guardian</h4>
         <Form.Item label="Email" name="email">
           <Input type="email"/>
         </Form.Item>
