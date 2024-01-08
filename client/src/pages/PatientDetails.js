@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Input, Modal, Table, Popconfirm, message } from "antd";
+import { Button, Form, Input, Modal, Table, Popconfirm, message, Select } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -19,6 +19,27 @@ const PatientDetails = () => {
   const [prescriptions, setPrescriptions] = useState(null);
   const [showModal, setShowModal] = useState(false)
   const [showMedicineModal, setShowMedicineModal] = useState(false)
+  const [showLogs, setShowLogs] = useState("temperature")
+
+  let tempLogs = []
+  let spO2Logs = []
+  let hrLogs = []
+
+  if(logs){
+    for(let i=0;i<logs.length;i++)
+    {
+      if(logs[i].type==0)
+      {
+        tempLogs.push(logs[i])
+      }
+      else if(logs[i].type == 1){
+        spO2Logs.push(logs[i]);
+      }
+      else{
+        hrLogs.push(logs[i])
+      }
+    }
+  }
   
   const getPatDetails = async () => {
     const resp = await axios.post(
@@ -124,12 +145,12 @@ const PatientDetails = () => {
   ];
   // console.log(data)
   // console.log(logs)
-  // if(logs && redirectFrom === "guardian")
+  // if(tempLogs && redirectFrom === "guardian")
   // {
-  //   // console.log(logs)
-  //   for(let i=0;i<logs.length;i++)
+  //   // console.log(tempLogs)
+  //   for(let i=0;i<tempLogs.length;i++)
   //    {
-  //     if(logs[i].value>=102 && logs[i].type==0)
+  //     if(tempLogs[i].value>=102 && tempLogs[i].type==0)
   //       {
   //         let text="Temperature is recorded higher than usual reading. Immediate medication is required.Kindly arrange for tests if required "
   //         let subject="Body Temperature high Alert- geriatic care"
@@ -179,6 +200,11 @@ const PatientDetails = () => {
     alert(resp.data.message)
   }
 
+  const setLogsChange = (val) => {
+    // console.log(val)
+    setShowLogs(val);
+  }
+
   return (
     <>
       {/* <h1>Hi guardian ={data.guardianName} patient={data.pName} is under doctor name={data.doctorEmail}</h1>
@@ -186,7 +212,19 @@ const PatientDetails = () => {
       <div className="p-5">
         {/* <h2>Welcome {data && data.guardianName}</h2> */}
        <div className="welcomeBox">
-          Hello {redirectFrom}
+          <p>Hello {redirectFrom === 'guardian' && data ? data.guardianName : redirectFrom} </p>
+       </div>
+       <div className="w-50 mx-auto">
+       <Select
+        defaultValue="temperature"
+        style={{ width: 120 }}
+        onChange={setLogsChange}
+        options={[
+          { value: 'temperature', label: 'Temperature' },
+          { value: 'spo2', label: 'SPO2' },
+          { value: 'heart-rate', label: 'Heart Rate' }
+        ]}
+      />
        </div>
         <div className="w-50 mx-auto">
           <Modal
@@ -218,9 +256,18 @@ const PatientDetails = () => {
             </Form>
           </Modal>
         </div>
-        <div className="w-50 mx-auto">
-          <p className="text-success font-bold">Log messages of {data && data.pName}</p>
-          <Table columns={columns} dataSource={logs} />
+        <div className="w-50 mx-auto my-2">
+          <p className="text-success font-bold">{showLogs.toUpperCase()} Log messages of {data && data.pName}</p>
+          {/* {showLogs === 'temperature' && <Table columns={columns} dataSource={tempLogs} />}
+          {showLogs === 'spo2' && <Table columns={columns} dataSource={spO2Logs} />}
+          {showLogs === 'heart-rate' && <Table columns={columns} dataSource={hrLogs} />} */}
+          {
+            showLogs === 'temperature' ? 
+            <Table columns={columns} dataSource={tempLogs} /> :
+            showLogs === 'spo2' ? 
+            <Table columns={columns} dataSource={spO2Logs} /> :
+            <Table columns={columns} dataSource={hrLogs} />
+          }
         </div>
         <div className="w-50 mx-auto">
           <Button type="primary" onClick={downloadReport}>Download Report</Button>

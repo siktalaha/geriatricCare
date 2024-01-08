@@ -42,7 +42,7 @@ const HospDetail = () => {
     {
       title:"Refer to",
       render:(text,record)=>
-      <div onClick={()=> navigate("/pat_details",{state:{redirectFrom:"hospital",id:record._id}})}>
+      <div className='pointerDiv' onClick={()=> navigate("/pat_details",{state:{redirectFrom:"hospital",id:record._id}})}>
         Click here
       </div>
     }
@@ -55,8 +55,8 @@ const HospDetail = () => {
       Hi {hospital.hospitalName}
     </div>
     <br/>
-    <br/>
-    <div>
+    <div className='w-75 mx-auto'>
+      <div>Patient List</div>
       <Table columns={columns} dataSource={pat}/>
     </div>
 
