@@ -124,7 +124,7 @@ const PatientDetails = () => {
   ];
   // console.log(data)
   // console.log(logs)
-  // if(logs)
+  // if(logs && redirectFrom === "guardian")
   // {
   //   // console.log(logs)
   //   for(let i=0;i<logs.length;i++)
