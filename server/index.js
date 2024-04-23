@@ -21,7 +21,7 @@ app.use("/api/v1/log",LogRoute)
 app.use("/api/v1/prescribe",PrescripRouter)
 
 app.get("/",(req,res)=>{
-    res.send("Backend Is Live")
+    res.send("Telemedicine Backend Is Live")
 })
 
 const startServer = async () => {
