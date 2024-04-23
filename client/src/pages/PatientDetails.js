@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { Button, Form, Input, Modal, Table, Popconfirm, message, Select } from "antd";
+import { Button, Form, Input, Modal, Table, Popconfirm, message, Select, Checkbox } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
@@ -17,9 +17,12 @@ const PatientDetails = () => {
   const [data, setData] = useState(null);
   const [logs, setLogs] = useState(null);
   const [prescriptions, setPrescriptions] = useState(null);
+  const [tests, setTests] = useState(null);
   const [showModal, setShowModal] = useState(false)
   const [showMedicineModal, setShowMedicineModal] = useState(false)
   const [showLogs, setShowLogs] = useState("temperature")
+  const [showScheduleTestModal, setShowScheduleTestModal] = useState(false)
+  const [showTest, setShowTest] = useState(false)
 
   let tempLogs = []
   let spO2Logs = []
@@ -50,6 +53,7 @@ const PatientDetails = () => {
     // console.log(resp.data.logs)
     setLogs(resp.data.logs);
     setPrescriptions(resp.data.prescriptions)
+    setTests(resp.data.tests)
   };
 
   const sendEmail = async (subject,text) => {
@@ -205,6 +209,23 @@ const PatientDetails = () => {
     setShowLogs(val);
   }
 
+  const submitScheduleTestHandler = async(val) => {
+    const resp = await axios.post(
+      "http://localhost:8000/api/v1/schedule/update", 
+      {
+        ...val,
+        patientEmail:data.email
+      }
+    )
+    if(resp.data.success)
+    {
+      // alert(resp.data.message)
+      message.success(resp.data.message)
+    }
+    else
+    message.error(resp.data.message)
+  }
+
   return (
     <>
       {/* <h1>Hi guardian ={data.guardianName} patient={data.pName} is under doctor name={data.doctorEmail}</h1>
@@ -256,6 +277,69 @@ const PatientDetails = () => {
             </Form>
           </Modal>
         </div>
+        <div className="w-50 mx-auto">
+          <Modal
+            forceRender
+            title = "Schedule Test"
+            open = {showScheduleTestModal}
+            onCancel={() => {
+              setShowScheduleTestModal(false)
+            }} 
+            footer = {false}
+          >
+            <Form 
+              layout="vertical" 
+              initialValues={{ remember: false }}
+              onFinish={submitScheduleTestHandler}
+            >
+              <Form.Item
+                name="CBC"
+                initialValue={false}
+                valuePropName="checked"
+              >
+                <Checkbox>Complete Blood Count</Checkbox>
+              </Form.Item>
+              <Form.Item
+                name="LP"
+                initialValue={false}
+                valuePropName="checked"
+              >
+                <Checkbox>Lipid Profile</Checkbox>
+              </Form.Item>
+              <Form.Item
+                name="DT"
+                initialValue={false}
+                valuePropName="checked"
+              >
+                <Checkbox>Diabetes Test</Checkbox>
+              </Form.Item>
+              <Form.Item
+                name="CT"
+                initialValue={false}
+                valuePropName="checked"
+              >
+                <Checkbox>Calcium Test</Checkbox>
+              </Form.Item>
+              <Form.Item
+                name="KFT"
+                initialValue={false}
+                valuePropName="checked"
+              >
+                <Checkbox>Kidney Function Test</Checkbox>
+              </Form.Item>
+              <Form.Item
+                name="LFT"
+                initialValue={false}
+                valuePropName="checked"
+              >
+                <Checkbox>Liver Function Test</Checkbox>
+              </Form.Item>
+            <button className="btn btn-primary">
+              Schedule 
+            </button>
+            </Form>
+          </Modal>
+        </div>
         <div className="w-50 mx-auto my-2">
           <p className="text-success font-bold">{showLogs.toUpperCase()} Log messages of {data && data.pName}</p>
           {/* {showLogs === 'temperature' && <Table columns={columns} dataSource={tempLogs} />}
@@ -274,8 +358,9 @@ const PatientDetails = () => {
          { redirectFrom==="doctor" && 
           <Button type="danger" onClick={() => setShowModal(true)}> Prescribe Medicine </Button>
         }
-          <Button type="success">Schedule tests</Button>
-          <Button type="success" onClick={() => setShowMedicineModal(true)}>View Medicine</Button>
+          {redirectFrom==="doctor" && <Button type="success" onClick={() => setShowScheduleTestModal(true)}>Schedule tests</Button>}
+          <Button type="success" onClick={() => setShowMedicineModal(true)}>Medicine</Button>
+          <Button type="success" onClick={() => setShowTest(true)}>Test</Button>
           <div className="w-50 mx-auto">
             <Modal
               forceRender
@@ -289,6 +374,28 @@ const PatientDetails = () => {
               <Table columns={prescriotionColumns} dataSource={prescriptions} />
             </Modal>
           </div>
+
+          {tests && <div className="w-50 mx-auto">
+            <Modal
+              forceRender
+              title = "Given Test"
+              open = {showTest}
+              onCancel={() => {
+                setShowTest(false)
+              }} 
+              footer = {false}
+            >
+              <ul>
+                {tests.CBC && <li>Complete Blood Count</li>}
+                {tests.LP && <li>Lipid Profile</li>}
+                {tests.DT && <li>Diabetes Test</li>}
+                {tests.CT && <li>Calcium Test</li>}
+                {tests.KFT && <li>Kidney Function Test</li>}
+                {tests.LFT && <li>Liver Function Test</li>}
+              </ul>
+            </Modal>
+          </div>}
+          
         </div>
       </div>
     </>
